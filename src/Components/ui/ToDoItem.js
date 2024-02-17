@@ -1,23 +1,25 @@
-import React from 'react'
-
+import { Checkbox, Flex, Input, Button } from '@chakra-ui/react'
+import { MdDelete } from "react-icons/md";
 const ToDoItem = ({ item, update, remove, toggle }) => {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', width: '50%' }}>
-      <div>
-        <input type="checkbox" checked={item?.done} onChange={() => toggle(item.id)} />
-        <label
-          style={{ textDecoration: item.done ? 'line-through' : null }}
-        >
-          <input
-            type="text"
-            value={item?.text}
-            style={{ textDecoration: item.done ? 'line-through' : null }}
-            onChange={(e) => update(e, item.id)}
-          />
-        </label>
-      </div>
-      <button onClick={() => remove(item.id)}>删除</button>
-    </div>
+    <Flex pt={2} key={item.id}>
+      <Checkbox
+        isChecked={item?.done}
+        onChange={() => toggle(item.id)}
+      />
+      <Input
+        mx={2}
+        value={item?.text}
+        onChange={(e) => update(e, item.id)}
+        style={{ textDecoration: item.done ? 'line-through' : null }}
+        disabled={item.done}
+      />
+      <Button
+        onClick={() => remove(item.id)}
+      >
+        <MdDelete />
+      </Button>
+    </Flex>
 
   )
 }

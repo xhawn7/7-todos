@@ -1,28 +1,30 @@
-import React from 'react'
-import ToDoList from 'src/Components/ui/ToDoList.js'
-import ToDoAdd from 'src/Components/ui/ToDoAdd.js'
-import useZustandStore from '../../Store/zustand.js'
+import { useZustandStore } from '../../Store/zustand.js'
+import ToDoMain from '../ui/ToDoMain.js'
 
 const ZustandToDo = () => {
-  // 行为
-  const store = useZustandStore()
+  const { toDoList, newValue, setNewVal, add, load, update, remove, toggle } = useZustandStore()
   const addProps = {
-    value: store.newValue,
-    onValChange: (e) => store.setNewVal(e.target.value),
-    add: () => store.add()
+    value: newValue,
+    onValChange: (e) => setNewVal(e.target.value),
+    add: () => add(),
+    loadToDo: () => load(),
+    toDoList: toDoList,
   }
   const listProps = {
-    toDoList: store.toDoList,
-    update: (e, id) => store.update(id, e.target.value),
-    remove: (id) => store.remove(id),
-    toggle: (id) => store.toggle(id)
+    toDoList: toDoList,
+    update: (e, id) => update(id, e.target.value),
+    remove: (id) => remove(id),
+    toggle: (id) => toggle(id)
   }
+
+  const todoPros = {
+    title: 'ZustandToDo',
+    addProps,
+    listProps
+  }
+
   return (
-    <div>
-      <h2>ZustandToDo</h2>
-      <ToDoAdd {...addProps} />
-      <ToDoList {...listProps} />
-    </div>
+    <ToDoMain {...todoPros} />
   )
 }
 
